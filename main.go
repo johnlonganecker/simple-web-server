@@ -35,12 +35,23 @@ func main() {
 func HandleRequest(conn net.Conn) {
 	buf := make([]byte, 1024)
 
+	startLine := "HTTP/1.1 200 OK"
+	entityBody := "Hello, World"
+	headers := Header("Content-Length", "5")
+
+	response := startLine + "\n" + headers + "\n\n" + entityBody
+
 	_, err := conn.Read(buf)
 	if err != nil {
 		fmt.Println("Error reading:", err.Error())
 	}
+	fmt.Printf("%s", buf)
 
-	conn.Write([]byte("Message received"))
+	conn.Write([]byte(response))
 
 	conn.Close()
+}
+
+func Header(key string, value string) string {
+	return key + ": " + value
 }
