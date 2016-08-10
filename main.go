@@ -1,9 +1,14 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"net"
 	"os"
+
+	"github.com/johnlonganecker/web-server/parser"
+
+	//"github.com/johnlonganecker/web-server/parser"
 )
 
 const (
@@ -33,7 +38,6 @@ func main() {
 }
 
 func HandleRequest(conn net.Conn) {
-	buf := make([]byte, 1024)
 
 	startLine := "HTTP/1.1 200 OK"
 	entityBody := "Hello, World"
@@ -41,11 +45,16 @@ func HandleRequest(conn net.Conn) {
 
 	response := startLine + "\n" + headers + "\n\n" + entityBody
 
-	_, err := conn.Read(buf)
-	if err != nil {
-		fmt.Println("Error reading:", err.Error())
-	}
-	fmt.Printf("%s", buf)
+	// buf := make([]byte, 1024)
+	//conn.Read(buf)
+	//fmt.Printf("%s", buf)
+
+	scanner := bufio.NewScanner(conn)
+	parser.Parse(scanner)
+
+	//if err != nil {
+	//fmt.Println("Error reading:", err.Error())
+	//}
 
 	conn.Write([]byte(response))
 
