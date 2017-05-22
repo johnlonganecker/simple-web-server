@@ -6,8 +6,7 @@ import (
 	"net"
 	"os"
 
-	"github.com/johnlonganecker/web-server/parser"
-
+	"github.com/johnlonganecker/simple-web-server/parser"
 	//"github.com/johnlonganecker/web-server/parser"
 )
 
@@ -16,6 +15,14 @@ const (
 	CONN_PORT = "3333"
 	CONN_TYPE = "tcp"
 )
+
+type response struct {
+	version      string
+	status       string
+	reasonPhrase string
+	headers      []string
+	body         string
+}
 
 func main() {
 	l, err := net.Listen(CONN_TYPE, CONN_HOST+":"+CONN_PORT)
