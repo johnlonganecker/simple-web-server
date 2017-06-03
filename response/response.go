@@ -10,10 +10,10 @@ type Response struct {
 	Body         string
 }
 
-func (r *Response) Header(key string, value string) {
+func (r *Response) AddHeader(key string, value string) {
 	r.Headers = r.Headers + key + ": " + value + "\n"
 }
 
 func (r *Response) String() string {
-	return r.Version + " " + r.Status + " " + r.ReasonPhrase + "\n" + headers + "\n" + r.Body
+	return r.Version + " " + r.Status + " " + r.ReasonPhrase + "\n" + r.Headers + "\n" + r.Body
 }

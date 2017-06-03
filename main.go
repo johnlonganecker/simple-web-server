@@ -6,8 +6,8 @@ import (
 	"net"
 	"os"
 
-	"github.com/johnlonganecker/simple-web-server/parser"
-	"github.com/johnlonganecker/simple-web-server/response"
+	"./parser"
+	"./response"
 	//"github.com/johnlonganecker/web-server/parser"
 )
 
@@ -39,17 +39,17 @@ func main() {
 
 func HandleRequest(conn net.Conn) {
 
-	resp := Response{
-		version: "HTTP/1.1",
-		status: "200",
-		reasonPhrase: "OK",
-		body: "Hello, World",
-		headers: make([]string, 2)
+	resp := response.Response{
+		Version:      "HTTP/1.1",
+		Status:       "200",
+		ReasonPhrase: "OK",
+		Body:         "Hello, World",
+		Headers:      "",
 	}
 
-	resp.headers = append(s, Header("Content-Length", "5"))
+	resp.AddHeader("Content-Length", "5")
 
-	response := startLine + "\n" + headers + "\n\n" + entityBody
+	//	response := startLine + "\n" + headers + "\n\n" + entityBody
 
 	// buf := make([]byte, 1024)
 	//conn.Read(buf)
@@ -62,11 +62,7 @@ func HandleRequest(conn net.Conn) {
 	//fmt.Println("Error reading:", err.Error())
 	//}
 
-	conn.Write([]byte(response))
+	conn.Write([]byte(resp.String()))
 
 	conn.Close()
-}
-
-func Header(key string, value string) string {
-	return key + ": " + value
 }
