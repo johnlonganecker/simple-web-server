@@ -47,22 +47,21 @@ func HandleRequest(conn net.Conn) {
 		Headers:      "",
 	}
 
-	resp.AddHeader("Content-Length", "5")
+	//t := time.Now()
+	//date := fmt.Printf("%d, %d ", t.Weekday().t.Day())
+	//t.Format("Mon, 02 Jan 2017 12:00:00 GMT")
 
-	//	response := startLine + "\n" + headers + "\n\n" + entityBody
-
-	// buf := make([]byte, 1024)
-	//conn.Read(buf)
-	//fmt.Printf("%s", buf)
+	resp.AddHeader("Content-Length", "12")
+	resp.AddHeader("Content-Type", "text/plain; charset=iso-latin-1")
+	//resp.AddHeader("Date", date)
 
 	scanner := bufio.NewScanner(conn)
 	parser.Parse(scanner)
 
-	//if err != nil {
-	//fmt.Println("Error reading:", err.Error())
-	//}
-
 	conn.Write([]byte(resp.String()))
 
-	conn.Close()
+	err := conn.Close()
+	if err != nil {
+		fmt.Println(err)
+	}
 }

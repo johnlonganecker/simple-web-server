@@ -2,7 +2,6 @@ package parser
 
 import (
 	"bufio"
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -52,8 +51,6 @@ func Parse(s *bufio.Scanner) RequestHeader {
 			break
 		}
 		line := s.Text()
-
-		fmt.Println(line)
 
 		// start line
 		if i == 0 {
